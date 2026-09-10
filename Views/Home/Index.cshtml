@@ -1,0 +1,225 @@
+@{
+    ViewBag.Title = "Smart Club Solutions — Draw System";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="app-wrapper">
+
+    <!-- ═══════════════════════════════════════════════════════════ SETUP SCREEN -->
+    <div id="screen-setup" class="scs-screen">
+        <div class="min-vh-100 d-flex flex-column align-items-center justify-content-center px-3 py-5">
+
+            <!-- Header icon -->
+            <div class="d-flex flex-column align-items-center mb-4">
+                <div id="setup-header-logo" class="mb-2"></div>
+                <p class="text-uppercase text-muted font-weight-bold mb-0" style="font-size:0.7rem;letter-spacing:0.18em;">Draw System</p>
+            </div>
+
+            <!-- Setup card -->
+            <div class="setup-card w-100">
+
+                <!-- Club Name -->
+                <div class="form-group">
+                    <label class="scs-label">Club Name</label>
+                    <input type="text" id="inp-club-name" class="form-control scs-input" placeholder="e.g. Rovers FC" />
+                </div>
+
+                <!-- Club Logo -->
+                <div class="form-group">
+                    <label class="scs-label">Club Logo</label>
+                    <label id="logo-upload-label" class="d-flex align-items-center logo-upload-row mb-0" style="cursor:pointer;">
+                        <div id="setup-logo-small" class="flex-shrink-0 mr-3"></div>
+                        <div id="logo-upload-zone" class="logo-upload-zone flex-fill text-center">Upload PNG / SVG / JPG</div>
+                        <input type="file" id="inp-logo" accept="image/*" style="display:none;" />
+                    </label>
+                </div>
+
+                <hr class="scs-divider" />
+
+                <!-- Select Event -->
+                <div class="form-group">
+                    <label class="scs-label">Select Event</label>
+                    <div id="event-list"></div>
+                </div>
+
+                <hr class="scs-divider" />
+
+                <!-- Number of Winners -->
+                <div class="form-group">
+                    <label class="scs-label">Number of Winners</label>
+                    <input type="number" id="inp-winner-count" class="form-control scs-input scs-input-lg" min="1" max="999" placeholder="e.g. 3" />
+                </div>
+
+                <!-- Draw Mode -->
+                <div class="form-group">
+                    <label class="scs-label">Draw Mode</label>
+                    <div class="row no-gutters" id="draw-mode-group">
+                        <div class="col pr-1">
+                            <button class="draw-mode-btn w-100 text-left" data-mode="manual">
+                                <div class="font-weight-bold" style="font-size:0.875rem;">One by One</div>
+                                <div style="font-size:0.75rem;opacity:0.7;margin-top:2px;">Manually advance each draw</div>
+                            </button>
+                        </div>
+                        <div class="col pl-1">
+                            <button class="draw-mode-btn w-100 text-left" data-mode="auto">
+                                <div class="font-weight-bold" style="font-size:0.875rem;">All at Once</div>
+                                <div style="font-size:0.75rem;opacity:0.7;margin-top:2px;">Auto-advance every 3.5s</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accent Color -->
+                <div class="form-group mb-4">
+                    <label class="scs-label">Accent Color</label>
+                    <div class="d-flex flex-wrap swatch-row mb-2" id="default-swatches"></div>
+                    <div class="d-flex flex-wrap swatch-row mb-2" id="saved-presets"></div>
+                    <div class="d-flex align-items-center">
+                        <div class="color-picker-wrapper mr-2">
+                            <div class="color-wheel-bg"></div>
+                            <input type="color" id="inp-color-picker" class="color-picker-input" />
+                        </div>
+                        <span id="accent-color-hex" class="text-muted flex-fill" style="font-family:monospace;font-size:0.8rem;"></span>
+                        <button id="btn-save-preset" class="btn btn-sm save-preset-btn ml-2">+ Save preset</button>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <button id="btn-start-draw" class="btn btn-block start-draw-btn" disabled="disabled">
+                    Select an event to begin
+                </button>
+
+            </div><!-- /setup-card -->
+
+            <p class="mt-5 mb-0 text-muted" style="font-size:0.75rem;">Smart Club Solutions</p>
+        </div>
+    </div><!-- /screen-setup -->
+
+
+    <!-- ═══════════════════════════════════════════════════════════ INTRO SCREEN -->
+    <div id="screen-intro" class="scs-screen" style="display:none;">
+        <div class="min-vh-100 d-flex flex-column align-items-center justify-content-center position-relative">
+
+            <!-- TopBar -->
+            <div class="scs-topbar">
+                <span id="intro-topbar-label" class="text-muted" style="font-size:0.875rem;font-weight:500;"></span>
+                <div>
+                    <button class="btn-topbar btn-fullscreen-toggle mr-2">&#x26F6; Fullscreen</button>
+                    <button class="btn-topbar btn-reset-draw">Reset</button>
+                </div>
+            </div>
+
+            <!-- Center content area -->
+            <div class="intro-center-wrap">
+                <!-- Title phase -->
+                <div id="intro-title-phase" class="text-center">
+                    <div id="intro-logo-inner" class="d-flex justify-content-center mb-4"></div>
+                    <div id="intro-club-name" class="text-muted text-uppercase font-weight-bold mb-2" style="letter-spacing:0.15em;font-size:0.875rem;"></div>
+                    <h1 id="intro-event-name" class="intro-event-title font-weight-black text-dark mb-0"></h1>
+                </div>
+                <!-- Countdown -->
+                <div id="intro-countdown" class="countdown-number" style="display:none;"></div>
+            </div>
+
+            <p class="position-absolute mb-0 text-muted" style="bottom:2rem;font-size:0.75rem;">Smart Club Solutions</p>
+        </div>
+    </div><!-- /screen-intro -->
+
+
+    <!-- ══════════════════════════════════════════════════════════ DRAWING SCREEN -->
+    <div id="screen-drawing" class="scs-screen" style="display:none;">
+        <div class="min-vh-100 d-flex flex-column align-items-center justify-content-center position-relative px-3 pb-4">
+
+            <!-- TopBar -->
+            <div class="scs-topbar">
+                <span id="drawing-topbar-label" class="text-muted" style="font-size:0.875rem;font-weight:500;"></span>
+                <div>
+                    <button class="btn-topbar btn-fullscreen-toggle mr-2">&#x26F6; Fullscreen</button>
+                    <button class="btn-topbar btn-reset-draw">Reset</button>
+                </div>
+            </div>
+
+            <!-- Logo + placement header -->
+            <div class="d-flex flex-column align-items-center mb-4">
+                <div id="drawing-logo-inner" class="mb-3"></div>
+                <div class="text-center">
+                    <div class="text-muted text-uppercase font-weight-bold mb-1" style="font-size:0.7rem;letter-spacing:0.15em;">Now Drawing</div>
+                    <div id="drawing-place" class="drawing-place font-weight-black"></div>
+                </div>
+            </div>
+
+            <!-- Slot machine box -->
+            <div id="slot-machine" class="slot-machine w-100">
+                <div class="scanlines"></div>
+                <div class="slot-content text-center">
+
+                    <!-- State: spinning -->
+                    <div id="slot-spinning" style="display:none;">
+                        <div id="animating-name" class="slot-name text-muted"></div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot" style="animation-delay:0.15s;"></div>
+                            <div class="loading-dot" style="animation-delay:0.3s;"></div>
+                        </div>
+                    </div>
+
+                    <!-- State: winner landed -->
+                    <div id="slot-winner" style="display:none;">
+                        <p id="winner-label" class="slot-winner-label text-uppercase font-weight-bold mb-2">Winner</p>
+                        <div id="winner-name" class="winner-name"></div>
+                        <div id="winner-id" class="winner-member-id mt-2" style="display:none;"></div>
+                    </div>
+
+                    <!-- State: empty / initial -->
+                    <div id="slot-empty">
+                        <div class="slot-name" style="color:#e2e8f0;">&mdash;</div>
+                    </div>
+
+                </div>
+            </div><!-- /slot-machine -->
+
+            <!-- One-by-one: next draw button -->
+            <div id="next-draw-btn-wrap" class="mt-4" style="display:none;">
+                <button id="btn-next-draw" class="btn btn-draw-next px-5">Draw Next &rarr;</button>
+            </div>
+
+            <!-- Auto-mode: progress bar -->
+            <div id="auto-progress-wrap" class="mt-4 w-100" style="max-width:672px;display:none;">
+                <div class="d-flex justify-content-between text-muted font-weight-medium mb-1" style="font-size:0.75rem;">
+                    <span>Draw progress</span>
+                    <span id="progress-label">0 / 0</span>
+                </div>
+                <div class="progress" style="height:8px;border-radius:999px;">
+                    <div id="progress-bar" class="progress-bar" role="progressbar" style="width:0%;border-radius:999px;"></div>
+                </div>
+            </div>
+
+            <p class="mt-5 mb-0 text-muted" style="font-size:0.75rem;">Smart Club Solutions</p>
+        </div>
+    </div><!-- /screen-drawing -->
+
+
+    <!-- ══════════════════════════════════════════════════════════ RESULTS SCREEN -->
+    <div id="screen-results" class="scs-screen" style="display:none;">
+        <div class="w-100 d-flex flex-column align-items-center px-3 py-4" style="min-height:100vh;">
+
+            <div id="results-logo-inner" class="d-flex justify-content-center mb-3"></div>
+
+            <div class="text-center mb-4">
+                <h2 id="results-event-name" class="font-weight-black text-uppercase text-dark mb-0"></h2>
+            </div>
+
+            <!-- Winner cards -->
+            <div id="results-cards-container" class="w-100" style="max-width:800px;"></div>
+
+            <!-- Action buttons -->
+            <div id="results-actions" class="mt-4" style="display:none;">
+                <button id="btn-celebrate" class="btn btn-celebrate mr-2">&#x1F389; Celebrate Again</button>
+                <button id="btn-new-draw" class="btn btn-new-draw">New Draw</button>
+            </div>
+
+            <p class="mt-4 mb-0 text-muted" style="font-size:0.75rem;">Smart Club Solutions</p>
+        </div>
+    </div><!-- /screen-results -->
+
+</div><!-- /app-wrapper -->

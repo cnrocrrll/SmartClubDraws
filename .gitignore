@@ -1,0 +1,14 @@
+# Build results
+bin/
+obj/
+
+# NuGet packages (restored via packages.config on build)
+packages/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# macOS
+.DS_Store
