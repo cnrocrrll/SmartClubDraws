@@ -12,3 +12,6 @@ packages/
 
 # macOS
 .DS_Store
+
+# Sensitive config (contains connection strings) - see README for Web.config.example
+Web.config
