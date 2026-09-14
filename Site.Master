@@ -1,6 +1,8 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="SmartClubDraws.SiteMaster" %>
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Club Solutions — Draw System</title>
@@ -8,14 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/Site.css")" />
+    <link rel="stylesheet" href="<%= ResolveUrl("~/Content/Site.css") %>" />
 </head>
 <body>
-    @RenderBody()
+    <form id="form1" runat="server">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </form>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script src="@Url.Content("~/Scripts/Draw.js?v=20260805")"></script>
+    <script src="<%= ResolveUrl("~/Scripts/Draw.js") %>?v=20260805"></script>
 </body>
 </html>

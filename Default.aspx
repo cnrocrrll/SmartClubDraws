@@ -1,7 +1,6 @@
-@{
-    ViewBag.Title = "Smart Club Solutions — Draw System";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SmartClubDraws.Default" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 <div id="app-wrapper">
 
@@ -55,13 +54,13 @@
                     <label class="scs-label">Draw Mode</label>
                     <div class="row no-gutters" id="draw-mode-group">
                         <div class="col pr-1">
-                            <button class="draw-mode-btn w-100 text-left" data-mode="manual">
+                            <button type="button" class="draw-mode-btn w-100 text-left" data-mode="manual">
                                 <div class="font-weight-bold" style="font-size:0.875rem;">One by One</div>
                                 <div style="font-size:0.75rem;opacity:0.7;margin-top:2px;">Manually advance each draw</div>
                             </button>
                         </div>
                         <div class="col pl-1">
-                            <button class="draw-mode-btn w-100 text-left" data-mode="auto">
+                            <button type="button" class="draw-mode-btn w-100 text-left" data-mode="auto">
                                 <div class="font-weight-bold" style="font-size:0.875rem;">All at Once</div>
                                 <div style="font-size:0.75rem;opacity:0.7;margin-top:2px;">Auto-advance every 3.5s</div>
                             </button>
@@ -80,12 +79,12 @@
                             <input type="color" id="inp-color-picker" class="color-picker-input" />
                         </div>
                         <span id="accent-color-hex" class="text-muted flex-fill" style="font-family:monospace;font-size:0.8rem;"></span>
-                        <button id="btn-save-preset" class="btn btn-sm save-preset-btn ml-2">+ Save preset</button>
+                        <button type="button" id="btn-save-preset" class="btn btn-sm save-preset-btn ml-2">+ Save preset</button>
                     </div>
                 </div>
 
                 <!-- Start Button -->
-                <button id="btn-start-draw" class="btn btn-block start-draw-btn" disabled="disabled">
+                <button type="button" id="btn-start-draw" class="btn btn-block start-draw-btn" disabled="disabled">
                     Select an event to begin
                 </button>
 
@@ -104,8 +103,8 @@
             <div class="scs-topbar">
                 <span id="intro-topbar-label" class="text-muted" style="font-size:0.875rem;font-weight:500;"></span>
                 <div>
-                    <button class="btn-topbar btn-fullscreen-toggle mr-2">&#x26F6; Fullscreen</button>
-                    <button class="btn-topbar btn-reset-draw">Reset</button>
+                    <button type="button" class="btn-topbar btn-fullscreen-toggle mr-2">&#x26F6; Fullscreen</button>
+                    <button type="button" class="btn-topbar btn-reset-draw">Reset</button>
                 </div>
             </div>
 
@@ -134,8 +133,8 @@
             <div class="scs-topbar">
                 <span id="drawing-topbar-label" class="text-muted" style="font-size:0.875rem;font-weight:500;"></span>
                 <div>
-                    <button class="btn-topbar btn-fullscreen-toggle mr-2">&#x26F6; Fullscreen</button>
-                    <button class="btn-topbar btn-reset-draw">Reset</button>
+                    <button type="button" class="btn-topbar btn-fullscreen-toggle mr-2">&#x26F6; Fullscreen</button>
+                    <button type="button" class="btn-topbar btn-reset-draw">Reset</button>
                 </div>
             </div>
 
@@ -180,7 +179,7 @@
 
             <!-- One-by-one: next draw button -->
             <div id="next-draw-btn-wrap" class="mt-4" style="display:none;">
-                <button id="btn-next-draw" class="btn btn-draw-next px-5">Draw Next &rarr;</button>
+                <button type="button" id="btn-next-draw" class="btn btn-draw-next px-5">Draw Next &rarr;</button>
             </div>
 
             <!-- Auto-mode: progress bar -->
@@ -214,8 +213,8 @@
 
             <!-- Action buttons -->
             <div id="results-actions" class="mt-4" style="display:none;">
-                <button id="btn-celebrate" class="btn btn-celebrate mr-2">&#x1F389; Celebrate Again</button>
-                <button id="btn-new-draw" class="btn btn-new-draw">New Draw</button>
+                <button type="button" id="btn-celebrate" class="btn btn-celebrate mr-2">&#x1F389; Celebrate Again</button>
+                <button type="button" id="btn-new-draw" class="btn btn-new-draw">New Draw</button>
             </div>
 
             <p class="mt-4 mb-0 text-muted" style="font-size:0.75rem;">Smart Club Solutions</p>
@@ -223,3 +222,5 @@
     </div><!-- /screen-results -->
 
 </div><!-- /app-wrapper -->
+
+</asp:Content>
